@@ -82,7 +82,7 @@ const deploy = ({
   } else {
     execSync('cd ${appdir}');
     execSync('git add *');
-    execSync('git commit -m "automatic deploy from github action" --force');
+    execSync('git commit -m "automatic deploy from github action"');
     execSync('git push heroku --force');
   }
 };
