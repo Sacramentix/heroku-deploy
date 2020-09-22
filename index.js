@@ -80,13 +80,10 @@ const deploy = ({
       appdir ? { cwd: appdir } : null
     );
   } else {
-    if (appdir === "") {
-      execSync(`git push heroku ${branch}:refs/heads/master ${force}`);
-    } else {
-      execSync(
-        `git push ${force} heroku \`git subtree split --prefix=${appdir} ${branch}\`:refs/heads/master`
-      );
-    }
+    execSync('cd ${appdir}');
+    execSync('git add *');
+    execSync('git commit -m "automatic deploy from github action"');
+    execSync('git push heroku ${force}');
   }
 };
 
