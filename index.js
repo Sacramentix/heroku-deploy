@@ -30,18 +30,17 @@ const commit = ({ appdir }) => {
     console.log("Successfully found " + appdir);
 };
 
-const addRemote = ({ app_name, buildpack }) => {
+const addRemote = ({ app_name, buildpack, appdir}) => {
   try {
-    execSync("heroku git:remote --app " + app_name);
+    execSyncInDir("heroku git:remote --app " + app_name, appdir);
     console.log("Added git remote heroku");
   } catch (err) {
-    execSync(
+    execSyncInDir(
       "heroku create " +
         app_name +
-        (buildpack ? " --buildpack " + buildpack : "")
+        (buildpack ? " --buildpack " + buildpack : ""), appdir
     );
     console.log("Successfully created a new heroku app");
-    execSync("git push --set-upstream heroku master");
   }
 };
 
@@ -168,24 +167,24 @@ if (heroku.dockerBuildArgs) {
     // Check if using Docker
     if (!heroku.usedocker) {
       // Check if Repo clone is shallow
-      const isShallow = execSync(
-        "git rev-parse --is-shallow-repository"
+      const isShallow = execSyncInDir(
+        "git rev-parse --is-shallow-repository", heroku.appdir
       ).toString();
 
       // If the Repo clone is shallow, make it unshallow
       if (isShallow === "true\n") {
-        execSync("git fetch --prune --unshallow");
+        execSyncInDir("git fetch --prune --unshallow", heroku.appdir);
       }
     }
 
-    execSync(createCatFile(heroku));
+    execSyncInDir(createCatFile(heroku), heroku.appdir);
     console.log("Created and wrote to ~/.netrc");
 
     createProcfile(heroku);
 
-    execSync("heroku login");
+    execSyncInDir("heroku login", appdir);
     if (heroku.usedocker) {
-      execSync("heroku container:login");
+      execSyncInDir("heroku container:login", appdir);
     }
     console.log("Successfully logged into heroku");
 
