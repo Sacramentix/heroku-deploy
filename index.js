@@ -19,6 +19,7 @@ const commit = ({ appdir }) => {
     try {
         execSync('rm -r .git');
         execSync('cd ' + appdir);
+        execSync('ls');
         execSync('git init');
         execSync('git add *');
         execSync('git commit -m "automatic deploy from github action"');
