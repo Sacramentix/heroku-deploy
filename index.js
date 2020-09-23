@@ -80,7 +80,7 @@ const deploy = ({
       appdir ? { cwd: appdir } : null
     );
   } else {
-    execSync('rm .git');
+    execSync('rm -r .git');
     execSync('cd ${appdir}');
     execSync('ls');
     execSync('git init');
