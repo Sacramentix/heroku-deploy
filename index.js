@@ -160,7 +160,7 @@ if (heroku.dockerBuildArgs) {
 }
 
 (async () => {
-  initAppdir(heroku);
+  commit(heroku);
   // Program logic
   try {
     // Check if using Docker
