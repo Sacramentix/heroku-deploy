@@ -91,7 +91,7 @@ const deploy = ({
       appdir ? { cwd: appdir } : null
     );
   } else {
-    execSyncInDir('git push heroku master --force', appdir);
+    execSync('git push heroku master --force', appdir ? { cwd: appdir } : null);
   }
 };
 
