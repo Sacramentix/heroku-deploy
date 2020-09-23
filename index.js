@@ -21,11 +21,10 @@ const initAppdir = ({ appdir }) => {
         execSync('cd ' + appdir);
         execSync('git init');
     } catch (err) {
-    console.log("Successfully found " + appdir);
+    console.log(err);
   }
+    console.log("Successfully found " + appdir);
 };
-    execSync('rm -r .git');
-    execSync('cd ${appdir}');
 
 const addRemote = ({ app_name, buildpack }) => {
   try {
