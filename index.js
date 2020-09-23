@@ -20,7 +20,6 @@ const initAppdir = ({ appdir }) => {
         execSync('rm -r .git');
         execSync('cd ${appdir}');
     } catch (err) {
-    );
     console.log("Successfully found ${appdir}");
   }
 };
