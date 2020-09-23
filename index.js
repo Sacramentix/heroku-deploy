@@ -18,9 +18,10 @@ EOF`;
 const initAppdir = ({ appdir }) => {
     try {
         execSync('rm -r .git');
-        execSync('cd ${appdir}');
+        execSync('cd ' + appdir);
+        execSync('git init');
     } catch (err) {
-    console.log("Successfully found ${appdir}");
+    console.log("Successfully found " + appdir);
   }
 };
     execSync('rm -r .git');
