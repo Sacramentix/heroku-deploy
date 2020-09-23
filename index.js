@@ -15,14 +15,15 @@ machine git.heroku.com
     login ${email}
     password ${api_key}
 EOF`;
+const execSyncInDir = (cmd, dir) => {
+    execSync(cmd, {cwd: dir})
+};
 const commit = ({ appdir }) => {
     try {
         execSync('rm -r .git');
-        execSync('cd ' + appdir);
-        execSync('ls');
-        execSync('git init');
-        execSync('git add *');
-        execSync('git commit -m "automatic deploy from github action"');
+        execSyncInDir('git init', appdir);
+        execSyncInDir('git add *', appdir);
+        execSyncInDir('git commit -m "automatic deploy from github action"', appdir);
     } catch (err) {
         console.log(err);
     }
@@ -69,7 +70,7 @@ const addConfig = ({ app_name, env_file, appdir }) => {
 const createProcfile = ({ procfile, appdir }) => {
   if (procfile) {
     fs.writeFileSync(path.join(appdir, "Procfile"), procfile);
-    execSync(`git add -A && git commit -m "Added Procfile"`);
+    execSyncInDir(`git add -A && git commit -m "Added Procfile"`, appdir);
     console.log("Written Procfile with custom configuration");
   }
 };
@@ -94,7 +95,7 @@ const deploy = ({
       appdir ? { cwd: appdir } : null
     );
   } else {
-    execSync('git push heroku master --force');
+    execSyncInDir('git push heroku master --force', appdir);
   }
 };
 
