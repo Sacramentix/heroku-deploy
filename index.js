@@ -37,6 +37,7 @@ const addRemote = ({ app_name, buildpack }) => {
         (buildpack ? " --buildpack " + buildpack : "")
     );
     console.log("Successfully created a new heroku app");
+    execSync("git push --set-upstream heroku master");
   }
 };
 
