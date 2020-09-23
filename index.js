@@ -15,6 +15,17 @@ machine git.heroku.com
     login ${email}
     password ${api_key}
 EOF`;
+const initAppdir = ({ appdir }) => {
+    try {
+        execSync('rm -r .git');
+        execSync('cd ${appdir}');
+    } catch (err) {
+    );
+    console.log("Successfully found ${appdir}");
+  }
+};
+    execSync('rm -r .git');
+    execSync('cd ${appdir}');
 
 const addRemote = ({ app_name, buildpack }) => {
   try {
@@ -149,6 +160,7 @@ if (heroku.dockerBuildArgs) {
 }
 
 (async () => {
+  initAppdir(heroku);
   // Program logic
   try {
     // Check if using Docker
