@@ -15,14 +15,16 @@ machine git.heroku.com
     login ${email}
     password ${api_key}
 EOF`;
-const initAppdir = ({ appdir }) => {
+const commit = ({ appdir }) => {
     try {
         execSync('rm -r .git');
         execSync('cd ' + appdir);
         execSync('git init');
+        execSync('git add *');
+        execSync('git commit -m "automatic deploy from github action"');
     } catch (err) {
-    console.log(err);
-  }
+        console.log(err);
+    }
     console.log("Successfully found " + appdir);
 };
 
@@ -91,9 +93,7 @@ const deploy = ({
       appdir ? { cwd: appdir } : null
     );
   } else {
-    execSync('git add *');
-    execSync('git commit -m "automatic deploy from github action"');
-    execSync('git push heroku --force');
+    execSync('git push heroku master --force');
   }
 };
 
